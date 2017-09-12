@@ -43,17 +43,15 @@ class DefaultController extends Controller
             /** @var Module $module */
             $module = Module::getInstance();
 
-            $MAILUP_CLIENT_ID = $module->client_id; //"a3b45d90-74ba-4c8d-8410-489e61d5d072";
-            $MAILUP_CLIENT_SECRET = $module->client_secret; // "8b1255f7-e3d8-4858-8871-759e6b676177";
-            $MAILUP_CALLBACK_URI = $module->callback_uri; //"http://127.0.0.1/index.php";
+            $MAILUP_CLIENT_ID = $module->client_id;
+            $MAILUP_CLIENT_SECRET = $module->client_secret;
+            $MAILUP_CALLBACK_URI = $module->callback_uri;
             $MAILUP_USERNAME = $module->username;
             $MAILUP_PASSWORD = $module->password;
 
             // Initializing MailUpClient
             $mailUp = new MailUpClient($MAILUP_CLIENT_ID, $MAILUP_CLIENT_SECRET, $MAILUP_CALLBACK_URI);
             $mailUp->logOnWithPassword($MAILUP_USERNAME, $MAILUP_PASSWORD);
-
-            //POST https://services.mailup.com/API/v1.1/Rest/ConsoleService.svc/Console/Group/{id_Group}/Recipient?ConfirmEmail=true
 
             $data = new stdClass();
             $data->Fields[0] = new stdClass();
