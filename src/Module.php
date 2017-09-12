@@ -20,7 +20,7 @@ class Module extends \yii\base\Module
     /**
      * @inheritdoc
      */
-    public $controllerNamespace = 'frontend\modules\newsletter\controllers';
+    public $controllerNamespace = 'grptx\newsletter\mailup\controllers';
 
     /**
      * @inheritdoc
