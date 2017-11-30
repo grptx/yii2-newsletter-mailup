@@ -53,7 +53,17 @@ $.ajax({
         first_name:'first_name',
         last_name:'last_name'
     },
-    complete:function(data) {
+    success:function(data) {
+        console.log(data);
+        if(data[result]=='ok') {
+            console.log('success');
+        } else if(data['error']) {
+            console.log(data['error']);            
+        } else {
+            console.log('generic error');
+        }
+    },
+    error:function(data) {
         console.log(data);
     }
 });
