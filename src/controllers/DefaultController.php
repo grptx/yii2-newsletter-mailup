@@ -8,6 +8,7 @@ use grptx\newsletter\mailup\wrapper\MailUpClient;
 use stdClass;
 use Yii;
 use yii\web\Controller;
+use yii\web\Response;
 
 /**
  * Default controller for the `newsletter` module
@@ -30,6 +31,47 @@ class DefaultController extends Controller
         ];
     }
 
+    public function actionAjaxCall(){
+	    /** @var NewsletterForm $model */
+	    $model = new NewsletterForm();
+
+	    Yii::$app->response->format = Response::FORMAT_JSON;
+
+	    if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post()) && $model->validate()) {
+		    /** @var Module $module */
+		    $module = Module::getInstance();
+
+		    $MAILUP_CLIENT_ID = $module->client_id;
+		    $MAILUP_CLIENT_SECRET = $module->client_secret;
+		    $MAILUP_CALLBACK_URI = $module->callback_uri;
+		    $MAILUP_USERNAME = $module->username;
+		    $MAILUP_PASSWORD = $module->password;
+
+		    // Initializing MailUpClient
+		    $mailUp = new MailUpClient($MAILUP_CLIENT_ID, $MAILUP_CLIENT_SECRET, $MAILUP_CALLBACK_URI);
+		    $mailUp->logOnWithPassword($MAILUP_USERNAME, $MAILUP_PASSWORD);
+
+		    $data = new stdClass();
+		    $data->Fields[0] = new stdClass();
+		    $data->Fields[0]->Id = 1;
+		    $data->Fields[0]->Value = $model->first_name;
+
+		    $data->Fields[1] = new stdClass();
+		    $data->Fields[1]->Id = 2;
+		    $data->Fields[1]->Value = $model->last_name;
+
+		    $data->Email = $model->email;
+
+		    $url = $mailUp->getConsoleEndpoint() . "/Console/Group/" . $module->group . "/Recipient?ConfirmEmail=true";
+		    $result = $mailUp->callMethod($url, "POST", json_encode($data), "JSON");
+
+		    if ($result) {
+			    return ['result'=>'ok'];
+		    }
+	    }
+	    return ['result'=>'ko'];
+    }
+
     /**
      * Renders the index view for the module
      * @return string
@@ -38,6 +80,7 @@ class DefaultController extends Controller
     {
         /** @var NewsletterForm $model */
         $model = new NewsletterForm();
+        $model->scenario = 'view';
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             /** @var Module $module */

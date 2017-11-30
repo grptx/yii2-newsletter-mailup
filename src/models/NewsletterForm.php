@@ -27,7 +27,7 @@ class NewsletterForm extends Model
         return [
             [['first_name', 'email', 'last_name'], 'required'],
             ['email', 'email'],
-            ['verifyCode', 'captcha'],
+            ['verifyCode', 'captcha','on'=>'view'],
         ];
     }
 
