@@ -36,8 +36,12 @@ class DefaultController extends Controller
 	    $model = new NewsletterForm();
 
 	    Yii::$app->response->format = Response::FORMAT_JSON;
+	    $data = Yii::$app->request->post();
+	    $model->email = $data['email'];
+	    $model->first_name = $data['first_name'];
+	    $model->last_name = $data['last_name'];
 
-	    if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post()) && $model->validate()) {
+	    if (Yii::$app->request->isAjax && $model->validate()) {
 		    /** @var Module $module */
 		    $module = Module::getInstance();
 

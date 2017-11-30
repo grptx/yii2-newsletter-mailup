@@ -37,3 +37,24 @@ to the require section of your `composer.json` file and execute `php composer.ph
     ],
 ...
 ]
+```
+
+### Usage
+
+Go to your application in your browser
+* ```http://localhost/pathtoapp/newsletter```
+* Or you can use an ajax call:
+```javascript
+$.ajax({
+    method:'post',
+    url:'/newsletter/default/ajax-call',
+    data:{
+        email:'email',
+        first_name:'first_name',
+        last_name:'last_name'
+    },
+    complete:function(data) {
+        console.log(data);
+    }
+});
+```
