@@ -41,9 +41,9 @@ class NewsletterForm extends Model implements INewsletterForm {
 			[ [ 'birth_day', 'birth_month', 'birth_year' ], 'number' ],
 
 			[
-				'repeatemail',
+				'email',
 				'compare',
-				'compareAttribute' => 'email',
+				'compareAttribute' => 'repeatemail',
 				'message'          => Yii::t( 'newsletter-mailup', "Emails don't match" )
 			]
 		];
@@ -84,14 +84,14 @@ class NewsletterForm extends Model implements INewsletterForm {
 
 		if($this->state) {
 			$field = new stdClass();
-			$field->Id = 5;
+			$field->Id = 8;
 			$field->Value = $this->state;
 			$extra[] = $field;
 		}
 
 		if($this->country) {
 			$field = new stdClass();
-			$field->Id = 8;
+			$field->Id = 5;
 			$field->Value = $this->country;
 			$extra[] = $field;
 		}
