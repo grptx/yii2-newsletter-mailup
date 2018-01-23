@@ -38,7 +38,7 @@ class NewsletterForm extends Model implements INewsletterForm {
 			[ 'email', 'email' ],
 			[ 'verifyCode', 'captcha', 'on' => 'view' ],
 			[ [ 'city', 'phone', 'title', 'state', 'country' ], 'string' ],
-			[ [ 'birth_day', 'birth_month', 'birth_year' ], 'number', 'required' ],
+			[ [ 'birth_day', 'birth_month', 'birth_year' ], 'number' ],
 
 			[
 				'repeatemail',
