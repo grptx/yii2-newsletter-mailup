@@ -64,6 +64,8 @@ class DefaultController extends Controller
 			$data->Fields[1]->Id = 2;
 			$data->Fields[1]->Value = $model->last_name;
 
+			$data->Fields = array_merge($data->Fields,$model->getExtraFields());
+
 			$data->Email = $model->email;
 
 			$url = $mailUp->getConsoleEndpoint() . "/Console/Group/" . $module->group . "/Recipient?ConfirmEmail=true";
@@ -87,6 +89,7 @@ class DefaultController extends Controller
 	/**
 	 * Renders the index view for the module
 	 * @return string
+	 * @throws \grptx\newsletter\mailup\wrapper\MailUpException
 	 */
 	public function actionIndex()
 	{
@@ -119,6 +122,7 @@ class DefaultController extends Controller
 
 			$data->Email = $model->email;
 
+			$data->Fields = array_merge($data->Fields,$model->getExtraFields());
 
 			$url = $mailUp->getConsoleEndpoint() . "/Console/Group/" . $module->group . "/Recipient?ConfirmEmail=true";
 			$result = $mailUp->callMethod($url, "POST", json_encode($data), "JSON");
