@@ -31,9 +31,19 @@ class DefaultController extends Controller
 		];
 	}
 
+	/**
+	 * @return array|mixed
+	 * @throws \grptx\newsletter\mailup\wrapper\MailUpException
+	 * @throws \yii\base\InvalidConfigException
+	 */
 	public function actionAjaxCall(){
+		/** @var Module $module */
+		$module = Module::getInstance();
+
+		$config["class"] = $module->formModelClass;
+
 		/** @var NewsletterForm $model */
-		$model = new NewsletterForm();
+		$model = Yii::createObject($config);;
 
 		Yii::$app->response->format = Response::FORMAT_JSON;
 		$data = Yii::$app->request->post();
@@ -90,16 +100,21 @@ class DefaultController extends Controller
 	 * Renders the index view for the module
 	 * @return string
 	 * @throws \grptx\newsletter\mailup\wrapper\MailUpException
+	 * @throws \yii\base\InvalidConfigException
 	 */
 	public function actionIndex()
 	{
+		/** @var Module $module */
+		$module = Module::getInstance();
+
+		$config["class"] = $module->formModelClass;
+
 		/** @var NewsletterForm $model */
-		$model = new NewsletterForm();
+		$model = Yii::createObject($config);;
 		$model->scenario = 'view';
 
 		if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-			/** @var Module $module */
-			$module = Module::getInstance();
+
 
 			$MAILUP_CLIENT_ID = $module->client_id;
 			$MAILUP_CLIENT_SECRET = $module->client_secret;

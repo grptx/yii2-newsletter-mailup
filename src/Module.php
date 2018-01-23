@@ -17,6 +17,8 @@ class Module extends \yii\base\Module
     public $password;
     public $group;
 
+    public $formModelClass;
+
     /**
      * @inheritdoc
      */
@@ -36,6 +38,10 @@ class Module extends \yii\base\Module
                 'class' => 'yii\i18n\PhpMessageSource',
                 'basePath' => __DIR__ . '/messages',
             ];
+        }
+
+        if(!$this->formModelClass) {
+        	$this->formModelClass = 'grptx\newsletter\mailup\models\NewsletterForm';
         }
     }
 }
