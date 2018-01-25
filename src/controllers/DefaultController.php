@@ -143,9 +143,9 @@ class DefaultController extends Controller
 			$result = $mailUp->callMethod($url, "POST", json_encode($data), "JSON");
 
 			if ($result) {
-				Yii::$app->session->setFlash('success', Yii::t('newsletter-mailup','Thank you for registering. Please check your email and confirm your address.'));
+				Yii::$app->session->setFlash('newsletter-mailup-success', Yii::t('newsletter-mailup','Thank you for registering. Please check your email and confirm your address.'));
 			} else {
-				Yii::$app->session->setFlash('error', Yii::t('newsletter-mailup','There was an error in the registration process. try later'));
+				Yii::$app->session->setFlash('newsletter-mailup-error', Yii::t('newsletter-mailup','There was an error in the registration process. try later'));
 			}
 
 			return $this->refresh();
